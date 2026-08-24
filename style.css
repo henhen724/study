@@ -1,0 +1,160 @@
+:root {
+  --bg: #14151a;
+  --panel: #1e2027;
+  --accent: #4f8cff;
+  --correct: #3ecf8e;
+  --incorrect: #ef5b5b;
+  --text: #e8e9ed;
+  --text-muted: #9498a3;
+  font-family: "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem 1.5rem 3rem;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.primary-btn {
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  filter: brightness(1.1);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.field input {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #262933;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-message {
+  min-height: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.form-message.error {
+  color: var(--incorrect);
+}
+
+.form-message.success {
+  color: var(--correct);
+}
+
+.topic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.topic-card {
+  display: block;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  text-align: left;
+}
+
+.topic-card:hover {
+  outline: 1px solid var(--accent);
+}
+
+.topic-card .topic-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.topic-card .topic-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.topic-card .topic-progress {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.account-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.topic-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.topic-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.topic-nav a:hover {
+  color: var(--text);
+}

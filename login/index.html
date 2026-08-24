@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — Study</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>Study</h1>
+    <p class="subtitle">Sign in to continue</p>
+
+    <form id="login-form">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required minlength="6" />
+      </div>
+      <p id="message" class="form-message"></p>
+      <button type="submit" id="signin-btn" class="primary-btn">Sign in</button>
+    </form>
+    <button id="signup-btn" class="link-btn">
+      New here? Create an account instead
+    </button>
+  </main>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

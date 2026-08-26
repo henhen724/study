@@ -35,15 +35,19 @@ const el = {
 let userId = null;
 
 async function renderOverallProgress() {
-  const progress = await loadProgress(TOPIC_ID);
-  const words = buildDeck();
-  const mastered = words.filter(
-    (w) => (progress[w.english] || 0) >= LEVEL_MASTERED
-  ).length;
-  el.overallProgress.textContent =
-    mastered === words.length
-      ? `All ${words.length} words permanently mastered — keep practicing to stay sharp!`
-      : `${mastered} / ${words.length} words permanently mastered`;
+  try {
+    const progress = await loadProgress(TOPIC_ID);
+    const words = buildDeck();
+    const mastered = words.filter(
+      (w) => (progress[w.english] || 0) >= LEVEL_MASTERED
+    ).length;
+    el.overallProgress.textContent =
+      mastered === words.length
+        ? `All ${words.length} words permanently mastered — keep practicing to stay sharp!`
+        : `${mastered} / ${words.length} words permanently mastered`;
+  } catch (err) {
+    el.overallProgress.textContent = `Couldn't load progress: ${err.message}`;
+  }
 }
 
 function showScreen(name) {
@@ -189,7 +193,13 @@ let currentQuestion = null;
 async function startSession() {
   const deck = buildDeck();
   const scriptMode = el.scriptMode.value;
-  const progress = await loadProgress(TOPIC_ID);
+  let progress;
+  try {
+    progress = await loadProgress(TOPIC_ID);
+  } catch (err) {
+    el.overallProgress.textContent = `Couldn't load progress: ${err.message}`;
+    return;
+  }
   session = new Session(deck, scriptMode, progress);
   showScreen("quiz");
   advance();
@@ -293,7 +303,12 @@ async function endSession() {
       changed[english] = newLevel;
     }
   }
-  await saveProgress(TOPIC_ID, userId, changed);
+  let saveError = null;
+  try {
+    await saveProgress(TOPIC_ID, userId, changed);
+  } catch (err) {
+    saveError = err.message;
+  }
 
   const accuracy = Math.round(
     (session.correctCount / (session.correctCount + session.wrongCount)) * 100
@@ -306,6 +321,7 @@ async function endSession() {
     <p><strong>${session.correctCount}</strong> correct answers, <strong>${session.wrongCount}</strong> mistakes</p>
     <p><strong>${accuracy}%</strong> accuracy this session</p>
     <p><strong>${overallMastered}</strong> / ${session.deck.length} words permanently mastered overall</p>
+    ${saveError ? `<p class="feedback incorrect">Couldn't save progress: ${saveError}</p>` : ""}
   `;
   showScreen("summary");
 }
@@ -317,7 +333,12 @@ el.restartBtn.addEventListener("click", async () => {
 });
 el.resetProgressBtn.addEventListener("click", async () => {
   if (confirm("Reset all saved progress for this topic?")) {
-    await resetProgress(TOPIC_ID, userId);
+    try {
+      await resetProgress(TOPIC_ID, userId);
+    } catch (err) {
+      el.overallProgress.textContent = `Couldn't reset progress: ${err.message}`;
+      return;
+    }
     await renderOverallProgress();
   }
 });

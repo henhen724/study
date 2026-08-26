@@ -34,7 +34,11 @@ form.addEventListener("submit", async (e) => {
       if (error) throw error;
       location.href = "../index.html";
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: new URL("../index.html", location.href).href },
+      });
       if (error) throw error;
       setMessage(
         "Account created. Check your email to confirm it, then sign in.",

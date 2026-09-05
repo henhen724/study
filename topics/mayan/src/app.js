@@ -153,15 +153,16 @@ class Session {
       ).slice(0, 3);
       choices = shuffle([card.word.english, ...pool.map((w) => w.english)]);
     }
+    const isNumeral = card.word.type === "numeral";
     return {
       card,
-      isNumeral: card.word.type === "numeral",
-      promptHtml:
-        card.word.type === "numeral"
-          ? renderMayaNumeral(card.word.value)
-          : null,
-      promptText: card.word.type === "numeral" ? null : card.word.maya,
+      isNumeral,
+      hasGlyph: !isNumeral && !!card.word.glyph,
+      promptHtml: isNumeral ? renderMayaNumeral(card.word.value) : null,
+      promptText: isNumeral ? null : card.word.maya,
+      promptGlyph: !isNumeral ? card.word.glyph : null,
       note: card.word.note || "",
+      thompson: card.word.thompson || "",
       useTyped,
       choices,
     };
@@ -242,6 +243,8 @@ function renderQuestion(q) {
   el.nextBtn.classList.add("hidden");
   if (q.isNumeral) {
     el.prompt.innerHTML = q.promptHtml;
+  } else if (q.hasGlyph) {
+    el.prompt.innerHTML = `<span class="maya-glyph">${q.promptGlyph}</span>`;
   } else {
     el.prompt.textContent = q.promptText;
   }
@@ -290,8 +293,17 @@ function handleAnswer(answer) {
     el.feedback.textContent = `Not quite — that's "${q.card.word.english}"`;
     el.feedback.className = "feedback incorrect";
   }
-  if (q.note) {
-    el.noteHint.textContent = q.isNumeral ? q.note : `${q.promptText}  →  ${q.note}`;
+  let hintText = "";
+  if (q.isNumeral) {
+    hintText = q.note;
+  } else if (q.hasGlyph) {
+    hintText = `${q.promptText} (${q.thompson})`;
+    if (q.note) hintText += `  →  ${q.note}`;
+  } else if (q.note) {
+    hintText = `${q.promptText}  →  ${q.note}`;
+  }
+  if (hintText) {
+    el.noteHint.textContent = hintText;
     el.noteHint.classList.remove("hidden");
   }
   el.nextBtn.classList.remove("hidden");

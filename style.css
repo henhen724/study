@@ -97,10 +97,32 @@ h1 {
 }
 
 .topic-list {
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.category-title {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+.category:first-child .category-title {
+  margin-top: 0;
+}
+
+.subcategory {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin: 1.5rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.subcategory-title {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
 
 .topic-card {

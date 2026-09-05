@@ -14,6 +14,14 @@ const TOPICS = [
     href: "topics/kana/",
     totalItems: 60,
   },
+  {
+    id: "latin-inscriptions",
+    title: "Latin Inscriptions",
+    description:
+      "Translate the abbreviations & formulas found on real Roman inscriptions (D M, H S E, S P Q R, ...).",
+    href: "topics/latin/",
+    totalItems: 54,
+  },
 ];
 
 const topicListEl = document.getElementById("topic-list");

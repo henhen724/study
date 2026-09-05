@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latin Inscriptions — Study</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <div class="topic-nav">
+      <a href="../../index.html">&larr; Dashboard</a>
+      <button id="signout-btn" class="link-btn">Sign out</button>
+    </div>
+    <h1>Latin Inscriptions</h1>
+    <p class="subtitle">Translate the abbreviations &amp; formulas found on real Roman inscriptions</p>
+
+    <section id="screen-start" class="screen">
+      <p id="overall-progress" class="overall-progress"></p>
+      <button id="start-btn" class="primary-btn">Start learning</button>
+      <button id="reset-progress-btn" class="link-btn">Reset saved progress</button>
+    </section>
+
+    <section id="screen-quiz" class="screen hidden">
+      <div class="progress-track">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <p id="progress-label" class="progress-label"></p>
+
+      <div class="card">
+        <p id="prompt" class="prompt"></p>
+        <p id="note-hint" class="romaji-hint hidden"></p>
+
+        <div id="choices" class="choices hidden"></div>
+
+        <form id="typed-form" class="typed-form hidden">
+          <input
+            id="typed-input"
+            type="text"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Type the English meaning"
+          />
+          <button type="submit" class="primary-btn">Check</button>
+        </form>
+
+        <p id="feedback" class="feedback"></p>
+      </div>
+
+      <button id="next-btn" class="primary-btn hidden">Next</button>
+    </section>
+
+    <section id="screen-summary" class="screen hidden">
+      <h2>Session complete!</h2>
+      <div id="summary-stats"></div>
+      <button id="restart-btn" class="primary-btn">Back to start</button>
+    </section>
+  </main>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

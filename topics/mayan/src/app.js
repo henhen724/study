@@ -157,12 +157,12 @@ class Session {
     return {
       card,
       isNumeral,
-      hasGlyph: !isNumeral && !!card.word.glyph,
+      hasGlyph: !isNumeral && !!card.word.glyphs,
       promptHtml: isNumeral ? renderMayaNumeral(card.word.value) : null,
       promptText: isNumeral ? null : card.word.maya,
-      promptGlyph: !isNumeral ? card.word.glyph : null,
+      promptGlyphs: !isNumeral ? card.word.glyphs || null : null,
       note: card.word.note || "",
-      thompson: card.word.thompson || "",
+      thompson: card.word.thompson || [],
       useTyped,
       choices,
     };
@@ -244,7 +244,9 @@ function renderQuestion(q) {
   if (q.isNumeral) {
     el.prompt.innerHTML = q.promptHtml;
   } else if (q.hasGlyph) {
-    el.prompt.innerHTML = `<span class="maya-glyph">${q.promptGlyph}</span>`;
+    el.prompt.innerHTML = q.promptGlyphs
+      .map((g) => `<span class="maya-glyph">${g}</span>`)
+      .join("");
   } else {
     el.prompt.textContent = q.promptText;
   }
@@ -297,7 +299,7 @@ function handleAnswer(answer) {
   if (q.isNumeral) {
     hintText = q.note;
   } else if (q.hasGlyph) {
-    hintText = `${q.promptText} (${q.thompson})`;
+    hintText = `${q.promptText} (${q.thompson.join("+")})`;
     if (q.note) hintText += `  →  ${q.note}`;
   } else if (q.note) {
     hintText = `${q.promptText}  →  ${q.note}`;

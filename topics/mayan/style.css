@@ -125,6 +125,7 @@ h1 {
   word-break: break-word;
   min-height: 2.5rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
@@ -136,8 +137,9 @@ h1 {
 
 .maya-glyph {
   font-family: "MayaGlyphs", sans-serif;
-  font-size: 4.5rem;
+  font-size: 3.5rem;
   line-height: 1;
+  margin: 0 2px;
 }
 
 .romaji-hint.hidden,
